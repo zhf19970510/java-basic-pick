@@ -1,0 +1,147 @@
+CREATE TABLE emp (empno INT, mgrno INT, ename VARCHAR(64));
+INSERT INTO emp VALUES(21, -1, 'King');
+INSERT INTO emp VALUES(22, 21, 'Tom');
+INSERT INTO emp VALUES(23, 21, 'Jerry');
+INSERT INTO emp VALUES(24, 21, 'Jack');
+INSERT INTO emp VALUES(25, 23, 'Mary');
+INSERT INTO emp VALUES(26, 23, 'Scott');
+INSERT INTO emp VALUES(27, 26, 'Mart');
+
+SELECT * FROM emp;
+
+-- 创建学生表
+CREATE TABLE student(sno int, name varchar(10), birthday date, department varchar(10), 
+sex varchar(10));
+
+INSERT INTO student VALUES(1, 'li', '2018-1-1', 'physics', 'boy');
+INSERT INTO student VALUES(5, 'lu', '2018-1-2', 'chinese', 'boy');
+INSERT INTO student VALUES(3, 'wang', '2018-1-3', 'english', 'girl');
+INSERT INTO student VALUES(4, 'zhang', '2018-1-4', 'history', 'boy');
+INSERT INTO student VALUES(2, 'jack', '2018-1-5', 'history', 'boy');
+
+SELECT * FROM student;
+
+-- 伪列的使用
+SELECT name FROM student 
+WHERE rownum < 5;
+
+select count(1)
+from emp group by mgrno;
+
+-- 字符函数用法
+--将字符串char转为全大写。
+SELECT LOWER('i LOVE you!');
+
+SELECT UPPER('i LOVE you!');
+
+SELECT INITCAP('i LOVE you!');
+
+select INSTR('HelloWorld', 'W')
+
+SELECT ceil(-45.923);
+
+SELECT FLOOR(-45.923);
+
+select abs (-45.923);
+
+SELECT round(44.95,1) ;
+
+SELECT round(44.92,1) ;
+
+SELECT round(44.92,0);
+
+SELECT round(44.92,-1);
+
+SELECT round(45.92,-1);
+
+SELECT round(-44.92,1) ;
+
+SELECT round(-44.95,1) ;
+
+SELECT round(-44.92,-1);
+
+SELECT round(-45.92,-1);
+
+SELECT to_number('19af','10');
+
+-- 查询系统时间
+SELECT CURRENT_DATE,SYSDATE;
+
+SELECT CURRENT_TIME,LOCALTIME,CURRENT_TIME(0),LOCALTIME(0);
+
+SELECT castsource::regtype,casttarget::regtype
+FROM sys_cast;
+
+
+SELECT castsource::regtype, casttarget::regtype,
+castcontext
+FROM sys_cast;
+ORDER BY 1,2;
+
+SELECT CAST('2019-10-10' as varchar(10)) date1;
+
+SELECT TO_CHAR (sysdate, 'MONTH') "MONTH",
+TO_CHAR(sysdate, 'MON') "MON",
+TO_CHAR(sysdate, 'DY') "DY",
+TO_CHAR(sysdate, 'DAY') "DAY";
+
+SELECT ('2019-09-27')::date;
+
+SELECT CAST(NOW() AS DATE);
+
+select now();
+
+
+-- 查看系统数据库相关信息
+SELECT version();
+
+SELECT sys_postmaster_start_time();
+
+SELECT date_trunc('second', current_timestamp - sys_postmaster_start_time()) as uptime;
+
+select *
+from sys_database;
+
+SELECT sys_database_size (current_database())/1024/1024||'MB' MB;
+
+select current_database();
+
+SELECT(sum(sys_database_size(datname))/1024/1024)||'MB' MB FROM sys_database;
+
+SELECT sys_relation_size('emp')/1024||'kB' kB;
+
+SELECT sys_total_relation_size('emp')/1024||'kB' kB;
+
+SELECT sys_conf_load_time();
+
+show timezone;
+
+SELECT now();
+
+SELECT current_catalog;
+
+SELECT current_database();
+
+-- 查询当前session所在客户端的IP地址及端口
+SELECT inet_server_addr(),inet_server_port();
+
+-- 查询当前session的后台服务进程的 pid
+SELECT sys_backend_pid();
+
+--想确认某个用户是否连接到当前DB上
+SELECT datname,usename FROM sys_stat_activity WHERE usename = 'system';
+-- 进一步确认当前的连接用户和对应的连接机器
+SELECT datname,usename,client_addr,client_port FROM sys_stat_activity where datname is not null;
+
+SHOW track_activities;
+
+-- 获取当前用户执行SQL信息：
+SELECT datname,usename,* FROM sys_stat_activity ;
+
+-- 只看当前正在运行的SQL信息：
+SELECT datname,usename,query FROM sys_stat_activity WHERE query != '<IDLE>' ;
+
+
+select version();
+
+select 1;
